@@ -46,6 +46,9 @@ class SocialMediaDownloadPlugin(Plugin):
         evt.content.body.startswith("!")):
             return
 
+        # If this message already has an embedded link preview, don't add another.
+        if evt.content.get("com.beeper.linkpreviews"): return
+
 
         for url_tup in youtube_pattern.findall(evt.content.body):
             await evt.mark_read()
